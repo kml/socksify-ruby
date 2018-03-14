@@ -1,51 +1,25 @@
 module Socksify
-  class Color
-    class Reset
-      def self::to_s
-        "\e[0m\e[37m"
-      end
-    end
-  
-    class Red < Color
-      def num; 31; end
-    end
-    class Green < Color
-      def num; 32; end
-    end
-    class Yellow < Color
-      def num; 33; end
-    end
-  
-    def self::to_s
-      new.to_s
-    end
-  
-    def to_s
-      "\e[1m\e[#{num}m"
-    end
-  end
-
   def self.debug=(enabled)
     @@debug = enabled
   end
 
   def self.debug_debug(str)
-    debug(Color::Green, str)
+    debug("DEBUG", str)
   end
 
   def self.debug_notice(str)
-    debug(Color::Yellow, str)
+    debug("NOTICE", str)
   end
 
   def self.debug_error(str)
-    debug(Color::Red, str)
+    debug("ERROR", str)
   end
 
   private
 
-  def self.debug(color, str)
+  def self.debug(level, str)
     if defined?(@@debug) && @@debug
-      puts "#{color}#{now_s}#{Color::Reset} #{str}"
+      puts "#{level} #{now_s} #{str}"
     end
   end
 
